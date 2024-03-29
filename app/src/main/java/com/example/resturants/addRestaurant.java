@@ -11,9 +11,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import java.util.Random;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+// This is the second activity where user can enter his own restaurants details
 public class addRestaurant extends AppCompatActivity {
 
 
@@ -33,6 +35,10 @@ public class addRestaurant extends AppCompatActivity {
 
         init();
 
+
+        // on clicking the add button, it takes all the information needed
+        // and add it to the list that displays
+
         btnAddResturant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,9 +54,8 @@ public class addRestaurant extends AppCompatActivity {
                     return;
                 }
 
-
                 Toast.makeText(addRestaurant.this, "Added!", Toast.LENGTH_SHORT).show();
-                MyApplication.restaurants.add(new Restaurant(name,location,phoneNumber,description));
+                MyApplication.restaurants.add(new Restaurant(name,location,phoneNumber,description, (new Random().nextInt(5) + 1)));
 
                 clear();
                 startActivity(new Intent(addRestaurant.this, MainActivity.class));

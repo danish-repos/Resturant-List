@@ -19,9 +19,14 @@
         android:textStyle="bold" />
 
     <SearchView
+        android:id="@+id/searchRes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp">
+        android:layout_margin="12dp"
+        android:hint="Search Restaurants"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
     </SearchView>
 

@@ -13,6 +13,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
+// custom adapter for the row_layout
+// custom design for every item in the list
+
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     private ArrayList<Restaurant> restaurantsList ;
@@ -26,6 +30,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
+        // making a view and inflating it to out custom design
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_layout, parent, false);
         return new ViewHolder(view);
 
@@ -40,7 +45,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         holder.tvLocation.setText(restaurantsList.get(position).getLocation());
         holder.tvPhoneNumber.setText(restaurantsList.get(position).getPhoneNumber());
         holder.tvDescription.setText(restaurantsList.get(position).getDescription());
-        holder.tvRatings.setText("1");
+        holder.tvRatings.setText(restaurantsList.get(position).getRating()+ "");
 
     }
 
@@ -48,6 +53,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public int getItemCount() {
         return restaurantsList.size();
     }
+
+
+    // making our own view holder class
+    // that holds the view
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
 

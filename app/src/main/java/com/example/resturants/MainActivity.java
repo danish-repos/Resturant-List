@@ -15,6 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+
+
+// this is the main activity that runs at the start
 public class MainActivity extends AppCompatActivity {
 
 
@@ -38,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
         init();
 
+        // on clicking the add button
+        // it goes to the "Add" screen where you can add new restaurants
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(getApplicationContext());
         rvList.setLayoutManager(layoutManager);
 
+        // setting up the custom adapter
         myAdapter = new MyAdapter(this, MyApplication.restaurants);
         rvList.setAdapter(myAdapter);
 
