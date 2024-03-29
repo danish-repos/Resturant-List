@@ -125,6 +125,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ratings will be randomized"
+            android:layout_above="@+id/btnAddResturant"
+            android:layout_marginBottom="5dp"
+            android:gravity="center"/>
+
+
         <Button
             android:id="@+id/btnAddResturant"
             android:layout_width="match_parent"

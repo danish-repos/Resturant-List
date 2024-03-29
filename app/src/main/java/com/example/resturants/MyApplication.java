@@ -16,8 +16,11 @@ public class MyApplication extends Application {
         // as we can't ask user for the ratings (for what i can understand)
 
         restaurants = new ArrayList<>();
-        restaurants.add(new Restaurant("KFC","Johar town","0320-1234567","A fast food place", (new Random().nextInt(5) + 1)));
-        restaurants.add(new Restaurant("Crust","Model town","0320-7654321","A slow food place",(new Random().nextInt(5) + 1)));
+        restaurants.add(new Restaurant("KFC","Johar town","1","A fast food place", Math.round(new Random().nextDouble() * 500) / 100.0));
+        restaurants.add(new Restaurant("Crust","Model town","2","A slow food place",Math.round(new Random().nextDouble() * 500) / 100.0));
+        restaurants.add(new Restaurant("Johnny and Jugnu","Model town","3","Informal take-outs and wraps",Math.round(new Random().nextDouble() * 500) / 100.0));
+        restaurants.add(new Restaurant("Subway","Model town","4","Dive-in, takeaway ",Math.round(new Random().nextDouble() * 500) / 100.0));
+        restaurants.add(new Restaurant("Daily Deli Co.","Model town","5","Dive-In takeaway",Math.round(new Random().nextDouble() * 500) / 100.0));
 
     }
 }

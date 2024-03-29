@@ -6,7 +6,7 @@ public class Restaurant {
     private String phoneNumber;
     private String description;
 
-    private int rating;
+    private double rating;
 
     public Restaurant() {
     }
@@ -39,15 +39,15 @@ public class Restaurant {
         return description;
     }
 
-    public int getRating(){return  rating;}
+    public double getRating(){return  rating;}
 
-    public void setRating(int rating){this.rating = rating;}
+    public void setRating(double rating){this.rating = rating;}
 
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public Restaurant(String name, String location, String phoneNumber, String description, int rating) {
+    public Restaurant(String name, String location, String phoneNumber, String description, double rating) {
         this.name = name;
         this.location = location;
         this.phoneNumber = phoneNumber;

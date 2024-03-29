@@ -55,7 +55,7 @@ public class addRestaurant extends AppCompatActivity {
                 }
 
                 Toast.makeText(addRestaurant.this, "Added!", Toast.LENGTH_SHORT).show();
-                MyApplication.restaurants.add(new Restaurant(name,location,phoneNumber,description, (new Random().nextInt(5) + 1)));
+                MyApplication.restaurants.add(new Restaurant(name,location,phoneNumber,description, Math.round(new Random().nextDouble() * 500) / 100.0));
 
                 clear();
                 startActivity(new Intent(addRestaurant.this, MainActivity.class));

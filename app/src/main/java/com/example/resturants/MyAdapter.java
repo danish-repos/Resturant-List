@@ -36,6 +36,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     }
 
+    public void filterList(ArrayList<Restaurant> filteredList) {
+        this.restaurantsList = filteredList;
+        notifyDataSetChanged();
+    }
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
