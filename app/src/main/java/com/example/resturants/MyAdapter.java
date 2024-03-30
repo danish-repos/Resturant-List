@@ -44,14 +44,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        holder.itemView.setTag(restaurantsList.get(position));
-
         holder.tvName.setText(restaurantsList.get(position).getName());
         holder.tvLocation.setText(restaurantsList.get(position).getLocation());
         holder.tvPhoneNumber.setText(restaurantsList.get(position).getPhoneNumber());
         holder.tvDescription.setText(restaurantsList.get(position).getDescription());
-        holder.tvRatings.setText(restaurantsList.get(position).getRating()+ "");
-
+        holder.tvRatings.setText(restaurantsList.get(position).getRating());
     }
 
     @Override

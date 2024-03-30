@@ -3,7 +3,9 @@ package com.example.resturants;
 import static java.util.Locale.filter;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.renderscript.Type;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SearchView;
@@ -26,13 +28,17 @@ import java.util.Locale;
 // this is the main activity that runs at the start
 public class MainActivity extends AppCompatActivity {
 
+    ArrayList<Restaurant> restaurants;
 
     Button btnAdd;
-
     SearchView svRestaurant;
     RecyclerView rvList;
     RecyclerView.LayoutManager layoutManager;
     public static MyAdapter myAdapter;
+
+
+    SharedPreferences spref;
+    private final String name = "RESTAURANT_SPREF";
 
 
     @Override
@@ -49,8 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         init();
 
-        // it will tells us whenever the text has been submit
-        // in the search view
+        // it will tells us whenever the text has been submit in the search view
         svRestaurant.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -65,8 +70,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        // on clicking the add button
-        // it goes to the "Add" screen where you can add new restaurants
+        // on clicking the add button, it goes to the "Add" screen where you can add new restaurants
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    // initializing all the variables
     private void init() {
         btnAdd = findViewById(R.id.btnAdd);
         svRestaurant = findViewById(R.id.svRestaurtant);
@@ -88,18 +94,39 @@ public class MainActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(getApplicationContext());
         rvList.setLayoutManager(layoutManager);
 
+        spref = getSharedPreferences(name, MODE_PRIVATE);
+        populateTheSpref();
 
-        // sorting the list on the ratings before showing it
-        MyApplication.restaurants.sort(new Comparator<Restaurant>() {
-            @Override
-            public int compare(Restaurant o1, Restaurant o2) {
-                return Double.compare(o2.getRating(), o1.getRating());
-            }
-        });
+        restaurants = getRestaurantListFromSharedPreferences();
+        sortByRating(restaurants);
 
         // setting up the custom adapter
-        myAdapter = new MyAdapter(this, MyApplication.restaurants);
+        myAdapter = new MyAdapter(this, restaurants);
         rvList.setAdapter(myAdapter);
+
+    }
+
+
+    // populating the spref with some random data
+    private void populateTheSpref(){
+
+        String temp = spref.getString("restaurant_list", null);
+        if (temp != null)
+            return;
+
+        SharedPreferences.Editor editor = spref.edit();
+        String[] restaurantData = {
+                "Daily Deli Co,Model Town,1,Dive-In or Takeaway,2.3",
+                "KFC,Wapda Town,2,A fast food place,4.3",
+                "Pizza Online,PIA Road,3,Cash Only,4.2",
+                "Johnny and Jugnu,Johar Town,4,Wraps,3.9\n",
+
+        };
+
+        String restaurantsString = String.join("\n", restaurantData);
+
+        editor.putString("restaurant_list", restaurantsString);
+        editor.apply();
 
     }
 
@@ -109,24 +136,48 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayList<Restaurant> searchFiltered = new ArrayList<>();
 
-        for (Restaurant restaurant : MyApplication.restaurants) {
+        for (Restaurant i : restaurants) {
 
-            if (restaurant.getName().toLowerCase().contains(text.toLowerCase())) {
-                searchFiltered.add(restaurant);
+            if (i.getName().toLowerCase().contains(text.toLowerCase())) {
+                searchFiltered.add(i);
             }
         }
 
-        // sorting it by the rating
-        // highest rated will be the first to appear
+        sortByRating(searchFiltered);
+        myAdapter.filterList(searchFiltered);
+    }
 
-        searchFiltered.sort(new Comparator<Restaurant>() {
+
+    private void sortByRating(ArrayList<Restaurant> restaurants){
+        Collections.sort(restaurants, new Comparator<Restaurant>() {
             @Override
             public int compare(Restaurant o1, Restaurant o2) {
-                return Double.compare(o2.getRating(), o1.getRating());
+                return Double.compare(Double.parseDouble(o2.getRating()),Double.parseDouble(o1.getRating()));
             }
         });
 
 
-        myAdapter.filterList(searchFiltered);
     }
+
+
+    // returns the array by taking the data from the spref
+    private ArrayList<Restaurant> getRestaurantListFromSharedPreferences() {
+
+        ArrayList<Restaurant> restaurantList = new ArrayList<>();
+
+        String restaurantsString = spref.getString("restaurant_list", null);
+
+        if (restaurantsString != null) {
+            String[] allRes = restaurantsString.split("\n");
+
+            for (String res : allRes) {
+                String[] split = res.split(",");
+                if (split.length == 5) {
+                    restaurantList.add(new Restaurant(split[0], split[1], split[2], split[3], split[4]));
+                }
+            }
+        }
+        return restaurantList;
+    }
+
 }

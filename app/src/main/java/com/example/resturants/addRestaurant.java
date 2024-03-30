@@ -1,6 +1,7 @@
 package com.example.resturants;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +22,10 @@ public class addRestaurant extends AppCompatActivity {
 
     TextInputEditText etName, etLocation, etPhoneNumber, etDescription;
     Button btnAddResturant;
+
+    SharedPreferences spref;
+
+    private final String name = "RESTAURANT_SPREF";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +59,20 @@ public class addRestaurant extends AppCompatActivity {
                     return;
                 }
 
+
+                String randomRating = "" + Math.round(new Random().nextDouble() * 500) / 100.0;
+                String newRestaurant = name + "," + location + "," + phoneNumber + "," + description + "," + randomRating + "\n";
+
+                String restaurant = spref.getString("restaurant_list", null);
+                restaurant += newRestaurant;
+
+                SharedPreferences.Editor editor = spref.edit();
+                editor.putString("restaurant_list",restaurant);
+                editor.apply();
+
+
                 Toast.makeText(addRestaurant.this, "Added!", Toast.LENGTH_SHORT).show();
-                MyApplication.restaurants.add(new Restaurant(name,location,phoneNumber,description, Math.round(new Random().nextDouble() * 500) / 100.0));
+
 
                 clear();
                 startActivity(new Intent(addRestaurant.this, MainActivity.class));
@@ -73,6 +90,9 @@ public class addRestaurant extends AppCompatActivity {
         etDescription = findViewById(R.id.etDescription);
 
         btnAddResturant = findViewById(R.id.btnAddResturant);
+
+
+        spref = getSharedPreferences(name, MODE_PRIVATE );
 
     }
 

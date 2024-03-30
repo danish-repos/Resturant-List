@@ -5,8 +5,7 @@ public class Restaurant {
     private String location;
     private String phoneNumber;
     private String description;
-
-    private double rating;
+    private String rating;
 
     public Restaurant() {
     }
@@ -39,15 +38,15 @@ public class Restaurant {
         return description;
     }
 
-    public double getRating(){return  rating;}
+    public String getRating(){return  rating;}
 
-    public void setRating(double rating){this.rating = rating;}
+    public void setRating(String rating){this.rating = rating;}
 
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public Restaurant(String name, String location, String phoneNumber, String description, double rating) {
+    public Restaurant(String name, String location, String phoneNumber, String description, String rating) {
         this.name = name;
         this.location = location;
         this.phoneNumber = phoneNumber;
@@ -57,7 +56,7 @@ public class Restaurant {
 
     @Override
     public String toString() {
-        return "Resturant{" +
+        return "Restaurant{" +
                 "name='" + name + '\'' +
                 ", location='" + location + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
